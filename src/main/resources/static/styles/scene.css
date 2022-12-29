@@ -1,0 +1,14 @@
+scene{
+    display: flex;
+    background: #cccccc;
+    z-index: 0;
+
+    grid-area: scene;
+}
+scene > canvas{
+    height: 100%;
+    width: 100%;
+}
+scene > canvas:focus{
+    outline: none;
+}

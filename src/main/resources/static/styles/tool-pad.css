@@ -1,0 +1,28 @@
+tool-pad {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: var(--toolpad-width);
+
+    z-index: 1;
+    grid-area: toolpad;
+}
+tool-pad > button {
+    height: var(--toolpad-width);
+    width: var(--toolpad-width);
+    background: white;
+    border: 0;
+    transform-origin: left;
+    transition: 0.2s;
+}
+tool-pad > button:hover {
+    transform: translateX(10px);
+    box-shadow:var(--shadow);
+    z-index:1
+}
+tool-pad > button:first-of-type {
+    margin-top: var(--indent);
+}
+tool-pad > button:last-of-type {
+    margin-bottom: var(--indent);
+}
