@@ -1,0 +1,45 @@
+:root{
+	--primary-color: dodgerblue;
+	--indent: 10px;
+	--toolpad-width: 50px;
+	--border: thin solid;
+	--radius: var(--indent);
+	--shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+body {
+	display: grid;
+	grid-template:
+    "toolpad                 scene" 100vh
+	/var(--toolpad-width)    1fr;
+			
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+input, button, select, textarea {
+	cursor: pointer;
+	font-family: inherit;
+	font-size: inherit;
+	padding: var(--indent);
+	box-sizing: border-box;
+	border: var(--border);
+	border-radius: var(--radius);
+}
+
+:is(input, button, select, textarea) img{
+	height: 100%;
+	/*width: 100%;*/
+}
+
+input:disabled {
+	color: #ccc;
+}
+
+button {
+	color: #333;
+	background-color: #f4f4f4;
+	outline: none;
+}
