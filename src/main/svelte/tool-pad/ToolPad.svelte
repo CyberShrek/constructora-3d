@@ -1,7 +1,5 @@
 <script>
-    // import {createSphere} from "./scene/workshop"
-
-    export let defaultSphereY = 1;
+    export let workshop;
 
 </script>
 
@@ -9,15 +7,12 @@
     <button class="create polygon">
         <img src="images/pentagon.png" alt="">
     </button>
-    <button class="create cube">
+    <button class="create box"
+            on:click={() => workshop.createBox()}>
         <img src="images/cube.png" alt="">
     </button>
-    <button class="create sphere">
+    <button class="create sphere"
+            on:click={() => workshop.createSphere()}>
         <img src="images/sphere.png" alt="">
     </button>
-<!--    <button class="create sphere"-->
-<!--            on:click={() => createSphere()}-->
-<!--    >-->
-<!--        <img src="images/sphere.png" alt="">-->
-<!--    </button>-->
 </tool-pad>

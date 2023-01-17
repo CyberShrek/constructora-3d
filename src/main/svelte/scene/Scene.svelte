@@ -1,10 +1,15 @@
 <script>
     import {onMount} from "svelte"
-    import {mountSceneToCanvas} from "./workshop";
+    import {Workshop} from "./workshop/workshop"
+
+    export let workshop
 
     let canvas
 
-    onMount(() => mountSceneToCanvas(canvas))
+    onMount(() => {
+        workshop = new Workshop(canvas)
+    })
+
 </script>
 
 <scene>

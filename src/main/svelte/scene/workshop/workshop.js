@@ -1,32 +1,32 @@
 import BABYLON from "babylonjs"
+import {Box, Ground, Sphere} from "./meshes"
 
-let scene,
+export let
+    canvas,
+    sceneSize = 100,
+    scene,
     light,
     shadowGenerator
 
-export class Workshop{
+export class Workshop {
 
-    constructor(canvas, sceneSize = 100) {
+    constructor(canvas) {
         mountScene()
-        mountGround()
         mountLight()
         mountCamera()
+        new Ground()
 
         function mountScene() {
             scene = new BABYLON.Scene(new BABYLON.Engine(canvas, true))
             scene.getEngine().runRenderLoop(() => scene.render())
         }
-        function mountGround() {
-            createMeshBy(
-                BABYLON.MeshBuilder.CreateGround,
-                "ground",
-                {width: sceneSize, height: sceneSize})
-        }
+
         function mountLight() {
             light = new BABYLON.DirectionalLight("light",
                 new BABYLON.Vector3(sceneSize, -sceneSize, sceneSize), scene)
             shadowGenerator = new BABYLON.ShadowGenerator(1024, light)
         }
+
         function mountCamera() {
             new BABYLON.ArcRotateCamera(
                 "camera",
@@ -38,21 +38,8 @@ export class Workshop{
         }
     }
 
-    createSphere=(x = 0, y = 0, z = 0) =>
-        createMeshBy(
-            BABYLON.MeshBuilder.CreateSphere,
-            "sphere",
-            {diameter: 10, segments: 32},
-            x, y, z)
+    sphereCount = 0
+    createSphere = (position) => new Sphere(position)
 
-}
-
-function createMeshBy(meshBuilderFunction, name, options, x = 0, y = 0, z = 0) {
-    const mesh = meshBuilderFunction(name, options, scene)
-    shadowGenerator.addShadowCaster(mesh, true)
-    mesh.receiveShadows = true
-    mesh.position.x = x
-    mesh.position.y = y
-    mesh.position.z = z
-    return mesh
+    createBox = (position) => new Box(position)
 }
