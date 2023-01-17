@@ -3,15 +3,18 @@
     import {Workshop} from "./workshop/workshop"
 
     export let workshop
-
-    let canvas
+    let canvas,
+        height,
+        width
 
     onMount(() => {
         workshop = new Workshop(canvas)
     })
-
 </script>
 
-<scene>
-    <canvas bind:this={canvas}></canvas>
+<scene bind:clientWidth={width}
+       bind:clientHeight={height}>
+    <canvas width={width}
+            height={height}
+            bind:this={canvas}></canvas>
 </scene>

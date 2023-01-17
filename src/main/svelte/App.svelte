@@ -11,5 +11,5 @@
 <Scene bind:workshop/>
 
 <style>
-
+    *{}
 </style>

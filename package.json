@@ -18,7 +18,10 @@
     "svelte": "^3.55.0"
   },
   "dependencies": {
+    "@babylonjs/core": "^5.42.2",
+    "@babylonjs/materials": "^5.42.2",
     "babylonjs": "^5.39.0",
+    "babylonjs-materials": "^5.42.2",
     "sirv-cli": "^2.0.0"
   }
 }
