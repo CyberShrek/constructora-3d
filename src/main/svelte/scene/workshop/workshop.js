@@ -48,7 +48,7 @@ export class Workshop {
                 BABYLON.Vector3.Zero(), scene)
 
             camera.attachControl(canvas, true)
-            camera.upperRadiusLimit = sceneSize;
+            camera.upperRadiusLimit = sceneSize + 100;
         }
     }
 
