@@ -3,7 +3,6 @@ tool-pad {
     flex-direction: column;
     justify-content: center;
     width: var(--toolpad-width);
-
     z-index: 1;
     grid-area: toolpad;
 }
@@ -13,16 +12,19 @@ tool-pad > button {
     background: white;
     border: 0;
     transform-origin: left;
-    transition: 0.2s;
+    filter: grayscale(1);
+    transition: all 0.3s, filter 0.1s;
 }
-tool-pad > button:hover {
-    transform: translateX(10px);
-    box-shadow:var(--shadow);
-    z-index:1
+tool-pad > :is(button:hover:not(.active), button.active) {
+    filter: grayscale(0);
 }
 tool-pad > button:first-of-type {
     margin-top: var(--indent);
 }
 tool-pad > button:last-of-type {
     margin-bottom: var(--indent);
+}
+tool-pad > button.active {
+    transform: translateX(10px);
+    z-index:1
 }

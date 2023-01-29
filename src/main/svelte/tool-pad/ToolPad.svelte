@@ -1,18 +1,25 @@
 <script>
-    export let workshop;
+
+    import CreatingButton from "./buttons/CreatingButton.svelte"
+    import {workshop} from "../scene/workshop/workshop"
+
+    let isBoxCreatingActive    = false,
+        isSphereCreationActive = false
+
+    $:   if(isBoxCreatingActive)    workshop.creatingMode.enableBox()
+    else if(isSphereCreationActive) workshop.creatingMode.enableSphere()
+    else workshop.creatingMode.disable()
 
 </script>
 
 <tool-pad>
-    <button class="create polygon">
-        <img src="images/pentagon.png" alt="">
-    </button>
-    <button class="create box"
-            on:click={() => workshop.createBox({x:0, y: 50, z: 0})}>
-        <img src="images/cube.png" alt="">
-    </button>
-    <button class="create sphere"
-            on:click={() => workshop.createSphere({x:0, y: 65, z: 0})}>
-        <img src="images/sphere.png" alt="">
-    </button>
+
+    <CreatingButton title="Create a Box"
+                    bind:isActive={isBoxCreatingActive}
+                    imageSrc="images/box.png"/>
+
+    <CreatingButton title="Create a Sphere"
+                    bind:isActive={isSphereCreationActive}
+                    imageSrc="images/sphere.png"/>
+
 </tool-pad>
