@@ -2,8 +2,6 @@ import {scene, sceneSize, shadowGenerator} from "./workshop"
 import BABYLON from "babylonjs"
 import MATERIALS from "babylonjs-materials"
 
-let meshNumber = 0
-
 // An abstract facade for BABYLON mesh provides convenient use of it.
 // Consists of the BABYLON mesh and some clear functions useful for this project
 class Facade{
@@ -13,37 +11,48 @@ class Facade{
     constructor(meshBuilderFunction,
                 name,
                 options,
-                position = {x: 0, y: 0, z: 0},
-                castShadows = true,
-                receiveShadows = true)
+                position = {x: undefined, y: undefined, z: undefined})
     {
-        this.babylonMesh = meshBuilderFunction(`Mesh ${meshNumber}: ${name}`, options, scene)
-        if(castShadows === true) shadowGenerator.addShadowCaster(this.babylonMesh, true)
-        this.babylonMesh.receiveShadows = receiveShadows
+        this.babylonMesh = meshBuilderFunction(name, options, scene)
+        shadowGenerator.addShadowCaster(this.babylonMesh, true)
+        this.babylonMesh.receiveShadows = true
+        // this.babylonMesh.setPivotPoint({x: 0, y: -5, z: 0})
         this.moveTo(position)
     }
 
     // Ghost-state is useful to show that mesh does not currently exist
     set isGhost(isIt){
-        if(isIt){
-            this.babylonMesh.visibility = 0.5
-        }
-        else {
-            this.babylonMesh.visibility = 1
-        }
-        this.babylonMesh.isGhost = !!isIt
+        this.babylonMesh.visibility = isIt ? 0.5 : 1
+        // this.babylonMesh.receiveShadows = !isIt
+        this.babylonMesh.isGhost    = !!isIt
     }
     get isGhost(){
-        return this.babylonMesh
+        return this.babylonMesh.isGhost
     }
 
     // Suitable with every object containing x, y, z props. Not only with BABYLON.Vector3
-    moveTo(position){
-        if(position) {
-            this.babylonMesh.position.x = position.x
-            this.babylonMesh.position.y = position.y
-            this.babylonMesh.position.z = position.z
+    moveTo(position, round = false){
+        let x = position.x,
+            y = position.y,
+            z = position.z
+
+        const distanceToBottomMesh = 12
+
+        if(round === true){
+            x = Math.round(x)
+            y = Math.round(y)
+            z = Math.round(z)
         }
+
+        this.babylonMesh.position.x = x
+        this.babylonMesh.position.y = y
+        this.babylonMesh.position.z = z
+    }
+
+    rotate(rotation){
+        this.babylonMesh.rotation.x = rotation.x
+        this.babylonMesh.rotation.y = rotation.y
+        this.babylonMesh.rotation.z = rotation.z
     }
 }
 
@@ -53,8 +62,7 @@ export class Ground extends Facade {
             BABYLON.MeshBuilder.CreateGround,
             "ground",
             {width: sceneSize, height: sceneSize, subdivisions: sceneSize/2},
-            {x: 0, y: 0, z: 0},
-            false
+            {x: 0, y: 0, z: 0}
         )
     }
 }
@@ -65,9 +73,7 @@ export class Grid extends Facade{
             BABYLON.MeshBuilder.CreateGround,
             "grid",
             {width: sceneSize, height: sceneSize},
-            {x: 0, y: 0.05, z: 0},
-            false,
-            false
+            {x: 0, y: 0.05, z: 0}
         )
         const groundMaterial = new MATERIALS.GridMaterial("groundMaterial", scene)
         groundMaterial.mainColor = new BABYLON.Color3(1, 1, 1)

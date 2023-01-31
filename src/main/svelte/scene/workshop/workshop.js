@@ -22,6 +22,8 @@ export const workshop = {
         mountShadows()
         mountCamera()
         mountGround()
+
+        new Sphere({x: 0, y: 15, z: 0})
     },
 
     // Allows toggling of creating
@@ -35,7 +37,7 @@ export const workshop = {
         startMeshAdvance(MeshClass){
             this.meshAdvance = new MeshClass()
             this.meshAdvance.isGhost = true
-            on.pointerMove=() => this.meshAdvance?.moveTo(getPointerMeshPosition())
+            on.pointerMove=() => this.meshAdvance?.moveTo(getPointerMeshPosition(), true)
         },
 
         disable(){
@@ -82,7 +84,7 @@ function mountLight() {
 }
 
 function mountShadows(){
-    shadowGenerator = new BABYLON.ShadowGenerator(sceneSize, light)
+    shadowGenerator = new BABYLON.ShadowGenerator(sceneSize * 5, light)
     shadowGenerator.bias = 0.005
     shadowGenerator.normalBias = 0.2
     shadowGenerator.useContactHardeningShadow = true
